@@ -11,6 +11,13 @@ Return the proper Keycloak image name
 {{- end -}}
 
 {{/*
+Return the proper Splunk Forwarder image name
+*/}}
+{{- define "keycloak.splunkForwarder.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.splunkForwarder.image "global" .Values.global) }}
+{{- end -}}
+
+{{/*
 Return the proper keycloak-config-cli image name
 */}}
 {{- define "keycloak.keycloakConfigCli.image" -}}
@@ -41,7 +48,7 @@ Return true if a configmap object should be created for keycloak-config-cli
 Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "keycloak.imagePullSecrets" -}}
-{{- include "common.images.renderPullSecrets" (dict "images" (list .Values.image .Values.keycloakConfigCli.image) "context" $) -}}
+{{- include "common.images.renderPullSecrets" (dict "images" (list .Values.image .Values.keycloakConfigCli.image .Values.splunkForwarder.image) "context" $) -}}
 {{- end -}}
 
 {{/*

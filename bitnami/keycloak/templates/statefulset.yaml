@@ -377,6 +377,34 @@ spec:
         {{- if .Values.sidecars }}
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
+
+      {{- if .Values.splunkForwarder.enabled }}
+        - name: splunk-uf
+          image: {{ template "keycloak.splunkForwarder.image" . }}
+          imagePullPolicy: {{ .Values.splunkForwarder.image.pullPolicy | default "IfNotPresent" }}
+          env:
+            - name: SPLUNK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.splunkForwarder.secret.name }}
+                  key: {{ .Values.splunkForwarder.secret.key }}
+            - name: SPLUNK_GENERAL_TERMS
+              value: "--accept-sgt-current-at-splunk-com"
+            - name: SPLUNK_START_ARGS
+              value: "--accept-license"
+            {{- with .Values.splunkForwarder.env }}
+            {{- toYaml . | nindent 10 }}
+            {{- end }}
+          {{- if .Values.splunkForwarder.volumeMounts }}
+          volumeMounts:
+          {{- toYaml .Values.splunkForwarder.volumeMounts | nindent 10 }}
+          {{- end }}
+          {{- with .Values.splunkForwarder.resources }}
+          resources:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+        {{- end }}
+
       volumes:
         - name: empty-dir
           emptyDir: {}
@@ -446,4 +474,9 @@ spec:
         {{- end }}
         {{- if .Values.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.splunkForwarder.enabled }}
+        {{- with .Values.splunkForwarder.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- end }}
