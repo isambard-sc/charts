@@ -10,7 +10,7 @@ annotations:
   licenses: Apache-2.0
   tanzuCategory: application
 apiVersion: v2
-appVersion: 26.3.3
+appVersion: 26.5.2
 dependencies:
 - condition: postgresql.enabled
   name: postgresql
