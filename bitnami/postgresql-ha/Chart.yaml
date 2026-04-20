@@ -14,7 +14,7 @@ annotations:
   licenses: Apache-2.0
   tanzuCategory: service
 apiVersion: v2
-appVersion: 17.6.0
+appVersion: 18.3.0
 dependencies:
 - name: common
   repository: oci://registry-1.docker.io/bitnamicharts
