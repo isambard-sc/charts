@@ -10,7 +10,7 @@ annotations:
   licenses: Apache-2.0
   tanzuCategory: application
 apiVersion: v2
-appVersion: 26.5.2
+appVersion: 26.8.1
 dependencies:
 - condition: postgresql.enabled
   name: postgresql
@@ -35,5 +35,5 @@ maintainers:
 name: keycloak
 sources:
 - https://github.com/bitnami/charts/tree/main/bitnami/keycloak
-version: 25.4.0
+version: 25.4.0-bristol1
 
